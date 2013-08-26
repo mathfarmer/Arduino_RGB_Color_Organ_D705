@@ -6,15 +6,15 @@
 #define MAX_AMPLITUDES  85   // If MAX_AMPLITUDES*BYTES_PER_COLOR > 255, promote out_idx and output_bytes to int
                              // If MAX_AMPLITUDES > 255 or MAX_COLORS > 255 protocol needs to be modified
 
-enum { ERROR_BYTE      = 'e',  // Something went wrong: device is now in command mode
-       MODE_COMMAND    = 'm',  // Next byte is a command
-       FLAG_OFFSET_ON  = 'O',  // Expect beat offset at the start of amp bytes. 
-       FLAG_OFFSET_OFF = 'o',  // Do not expect beat offset at the start of amp bytes
-       MODE_INIT_COLOR = 'c',  // Receive color data - Next byte is a color byte
-       MODE_GET_COLORS = 'C',  // INTERNAL: Receive color data - Next byte is a color byte
-       MODE_INIT_AMPS  = 'a',  // Init amplitude data - Next byte is the number of amplitudes
-       MODE_GET_OFFSET = 'K',  // INTERNAL: Receive offset number - Next byte
-       MODE_GET_AMPS   = 'A'}; // INTERNAL: Receive amplitude data - Next byte is an amplitude
+enum { ERROR_BYTE      = 'e',  // Something went wrong: device is now in command mode          -> 'm'
+       MODE_COMMAND    = 'm',  // Next byte is a command                                       -> mode from byte
+       FLAG_OFFSET_ON  = 'O',  // Expect beat offset at the start of amp bytes.                -> 'm'
+       FLAG_OFFSET_OFF = 'o',  // Do not expect beat offset at the start of amp bytes          -> 'm'
+       MODE_INIT_COLOR = 'c',  // Receive color data - Next byte is a color byte               -> 'C' or 'm'
+       MODE_GET_COLORS = 'C',  // INTERNAL: Receive color data - Next byte is a color byte     -> 'C' or 'm'
+       MODE_INIT_AMPS  = 'a',  // Init amplitude data - Next byte is the number of amplitudes  -> 'K' or 'A' or 'm'
+       MODE_GET_OFFSET = 'K',  // INTERNAL: Receive offset number - Next byte                  -> 'A'
+       MODE_GET_AMPS   = 'A'}; // INTERNAL: Receive amplitude data - Next byte is an amplitude -> 'A' or 'a'
 
 inline boolean checkMode( byte proposedMode ) {
   return    proposedMode == MODE_COMMAND
@@ -37,7 +37,6 @@ byte counter;
 byte out_idx;
 byte col_idx;
 byte colors[MAX_COLORS*BYTES_PER_COLOR];
-//byte amplitudes[MAX_AMPLITUDES];
 byte output[MAX_AMPLITUDES * 2];
 byte colors_len;
 byte amplitudes_len;
@@ -167,9 +166,7 @@ void loop() {
           
           byte hb = rgbTo15bit_h(r, g);
           byte lb = rgbTo15bit_l(g, b); 
-          
-          //SPI.transfer(hb);
-          //SPI.transfer(lb);
+
           output[out_idx++] = hb;
           output[out_idx++] = lb;
           ++counter;
