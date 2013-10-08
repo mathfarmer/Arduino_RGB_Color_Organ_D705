@@ -133,6 +133,7 @@ void loop() {
               expectOffset = false;
               break;
           }
+          Serial.write(inByte);
         }
         else {
           Serial.write(ERROR_BYTE);
@@ -187,15 +188,12 @@ void loop() {
               mode = MODE_GET_OFFSET;
             else
               mode = MODE_GET_AMPS;
-              
-            //Serial.write(MODE_INIT_AMPS);
           }
         }
         break;
       case MODE_GET_OFFSET:
         offset = inByte;
         mode = MODE_GET_AMPS;
-        //Serial.write(MODE_INIT_AMPS);
         break;  
       case MODE_GET_AMPS:
         if (counter < amplitudes_len) {
