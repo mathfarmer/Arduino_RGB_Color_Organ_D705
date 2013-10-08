@@ -1,3 +1,42 @@
+/*
+RGB Color Organ D705
+
+Takes amplitude information sent over a serial connection and lights 
+up RGB LEDs controlled by the D705 chipset based on that information.
+
+Copyright (C) 2013 Douglas A. Telfer
+
+This source code is released simultaneously under the GNU GPL v2 
+and the Mozilla Public License, v. 2.0; derived works may use 
+either license, a compatible license, or both licenses as suits 
+the needs of the derived work.
+
+Additional licensing terms may be available; contact the author
+with your proposal.
+
+*** GNU General Public License, version 2 notice:
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+
+*** Mozilla Public License, v. 2.0 notice:
+
+This Source Code Form is subject to the terms of the Mozilla Public
+License, v. 2.0. If a copy of the MPL was not distributed with this
+file, You can obtain one at http://mozilla.org/MPL/2.0/
+*/
+
 #include <SPI.h>
 
 #define LED_COUNT       50   // If LED_COUNT > 255, promote counter to int
